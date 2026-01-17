@@ -1,0 +1,22 @@
+{
+  "tanzania_service_templates": [
+    {
+      "template_name": "service_recommendations",
+      "category": "UTILITY",
+      "language": "en",
+      "header": "🏪 Service Recommendations",
+      "body": "Dear {{1}}, we found excellent services near {{2}}:\n\n{{3}}\n\n💰 Cost: TZS {{4}}\n📍 {{5}} km away\n\nReply below for details.",
+      "footer": "Tanzania Services Assistant",
+      "buttons": [
+        {
+          "type": "QUICK_REPLY",
+          "text": "🗺️ Get Directions"
+        },
+        {
+          "type": "QUICK_REPLY",
+          "text": "📞 Contact Service"
+        }
+      ]
+    }
+  ]
+}

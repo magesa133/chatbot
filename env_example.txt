@@ -1,0 +1,30 @@
+# Tanzania Service Chatbot Environment Configuration
+# Copy this file to .env and fill in your actual credentials
+# Run: cp env_example.txt .env
+
+# Choose your WhatsApp provider: 'meta' or 'ghala'
+WHATSAPP_PROVIDER=ghala
+
+# ===== META WHATSAPP BUSINESS API =====
+# (Required if WHATSAPP_PROVIDER='meta')
+# Get these from: https://developers.facebook.com/
+WHATSAPP_ACCESS_TOKEN=your_meta_access_token_here
+WHATSAPP_PHONE_NUMBER_ID=your_meta_phone_number_id_here
+WHATSAPP_WABA_ID=your_meta_waba_id_here
+WHATSAPP_WEBHOOK_TOKEN=your_webhook_verify_token_here
+
+# ===== GHALA WHATSAPP API =====
+# (Required if WHATSAPP_PROVIDER='ghala')
+# Get these from: https://dev.ghala.io/
+GHALA_APP_ID=your_ghala_app_id_here
+GHALA_APP_SECRET=your_ghala_app_secret_here
+GHALA_WEBHOOK_TOKEN=your_ghala_webhook_token_here
+
+# ===== SERVER CONFIGURATION =====
+HOST=0.0.0.0
+PORT=5000
+DEBUG=false
+
+# ===== OPTIONAL =====
+# OpenStreetMap API key for enhanced geocoding (optional)
+OSM_API_KEY=your_osm_api_key_here

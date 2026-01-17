@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Template Creator - Tanzania Service Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #25D366;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .character-count {
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+            margin-top: 5px;
+        }
+        .buttons-section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .button-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .button-item select, .button-item input {
+            flex: 1;
+        }
+        .add-button {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .preview-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .preview-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .preview-content {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #25D366;
+        }
+        .submit-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .template-examples {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 5px;
+        }
+        .template-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇹🇿 WhatsApp Template Creator</h1>
+
+        <form id="templateForm">
+            <div class="form-group">
+                <label for="account">WhatsApp Account *</label>
+                <input type="text" id="account" placeholder="YOUR_PHONE_NUMBER_ID" required>
+            </div>
+
+            <div class="form-group">
+                <label for="templateName">Template Name *</label>
+                <input type="text" id="templateName" placeholder="tanzania_service_template" pattern="[a-z0-9_]+" required>
+                <small>Lowercase letters, numbers, and underscores only</small>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category *</label>
+                <select id="category" required>
+                    <option value="">Select Category</option>
+                    <option value="MARKETING">MARKETING</option>
+                    <option value="UTILITY">UTILITY</option>
+                    <option value="AUTHENTICATION">AUTHENTICATION</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="language">Language *</label>
+                <select id="language" required>
+                    <option value="en">English (en)</option>
+                    <option value="sw">Swahili (sw)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="header">Header (optional)</label>
+                <input type="text" id="header" placeholder="🇹🇿 Tanzania Service Finder">
+                <div class="character-count" id="headerCount">0/60 characters</div>
+            </div>
+
+            <div class="form-group">
+                <label for="body">Body *</label>
+                <textarea id="body" placeholder="Hi {{1}}! Welcome to Tanzania services..." required></textarea>
+                <div class="character-count" id="bodyCount">0/1024 characters</div>
+                <small>Use placeholders like {{1}}, {{2}} for dynamic values</small>
+            </div>
+
+            <div class="form-group">
+                <label for="footer">Footer (optional)</label>
+                <input type="text" id="footer" placeholder="Powered by AI • Tanzania Services">
+                <div class="character-count" id="footerCount">0/60 characters</div>
+                <small>No variables allowed in footer</small>
+            </div>
+
+            <div class="buttons-section">
+                <label>Buttons (optional)</label>
+                <div id="buttonsContainer">
+                    <!-- Buttons will be added here dynamically -->
+                </div>
+                <button type="button" class="add-button" onclick="addButton()">+ Add Button</button>
+                <small>Max 3 buttons. Quick Reply, URL, and Phone Number buttons supported.</small>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-title">📱 Live Preview</div>
+                <div class="preview-content" id="preview">No template data to preview</div>
+            </div>
+
+            <button type="submit" class="submit-btn">📤 Submit Template to WhatsApp</button>
+        </form>
+
+        <div class="template-examples">
+            <h3>🎯 Pre-built Tanzania Templates</h3>
+            <p>Click to load pre-configured templates:</p>
+            <button class="template-btn" onclick="loadTemplate('welcome')">Welcome Message</button>
+            <button class="template-btn" onclick="loadTemplate('restaurants')">Restaurant Finder</button>
+            <button class="template-btn" onclick="loadTemplate('directions')">Location Directions</button>
+            <button class="template-btn" onclick="loadTemplate('medical')">Medical Services</button>
+            <button class="template-btn" onclick="loadTemplate('feedback')">Feedback Request</button>
+        </div>
+    </div>
+
+    <script>
+        let buttonCount = 0;
+        const maxButtons = 3;
+
+        // Character counting
+        document.getElementById('header').addEventListener('input', function() {
+            updateCharCount('header', 60);
+        });
+
+        document.getElementById('body').addEventListener('input', function() {
+            updateCharCount('body', 1024);
+        });
+
+        document.getElementById('footer').addEventListener('input', function() {
+            updateCharCount('footer', 60);
+        });
+
+        function updateCharCount(fieldId, maxLength) {
+            const field = document.getElementById(fieldId);
+            const countElement = document.getElementById(fieldId + 'Count');
+            const length = field.value.length;
+            countElement.textContent = `${length}/${maxLength} characters`;
+
+            if (length > maxLength) {
+                countElement.style.color = 'red';
+            } else {
+                countElement.style.color = length > maxLength * 0.9 ? 'orange' : '#666';
+            }
+        }
+
+        function addButton() {
+            if (buttonCount >= maxButtons) {
+                alert('Maximum 3 buttons allowed');
+                return;
+            }
+
+            buttonCount++;
+            const container = document.getElementById('buttonsContainer');
+
+            const buttonDiv = document.createElement('div');
+            buttonDiv.className = 'button-item';
+            buttonDiv.innerHTML = `
+                <select onchange="updateButtonFields(${buttonCount})" id="btnType${buttonCount}" required>
+                    <option value="">Select Type</option>
+                    <option value="QUICK_REPLY">Quick Reply</option>
+                    <option value="URL">URL</option>
+                    <option value="PHONE_NUMBER">Phone Number</option>
+                </select>
+                <input type="text" id="btnText${buttonCount}" placeholder="Button text" required>
+                <input type="text" id="btnValue${buttonCount}" placeholder="URL or phone number" style="display:none;">
+                <button type="button" onclick="removeButton(this)">❌</button>
+            `;
+
+            container.appendChild(buttonDiv);
+            updatePreview();
+        }
+
+        function updateButtonFields(buttonNum) {
+            const typeSelect = document.getElementById(`btnType${buttonNum}`);
+            const valueField = document.getElementById(`btnValue${buttonNum}`);
+
+            if (typeSelect.value === 'QUICK_REPLY') {
+                valueField.style.display = 'none';
+                valueField.required = false;
+            } else {
+                valueField.style.display = 'block';
+                valueField.required = true;
+                valueField.placeholder = typeSelect.value === 'URL' ? 'https://example.com' : '+255XXXXXXXXX';
+            }
+
+            updatePreview();
+        }
+
+        function removeButton(button) {
+            button.parentElement.remove();
+            buttonCount--;
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const header = document.getElementById('header').value;
+            const body = document.getElementById('body').value;
+            const footer = document.getElementById('footer').value;
+
+            let preview = '';
+
+            if (header) {
+                preview += `<strong>${header}</strong><br><br>`;
+            }
+
+            if (body) {
+                // Replace placeholders with sample data
+                let previewBody = body;
+                previewBody = previewBody.replace(/\{\{1\}\}/g, 'John');
+                previewBody = previewBody.replace(/\{\{2\}\}/g, 'Masaki');
+                previewBody = previewBody.replace(/\{\{3\}\}/g, 'restaurants');
+                previewBody = previewBody.replace(/\{\{4\}\}/g, '3 great restaurants');
+                previewBody = previewBody.replace(/\{\{5\}\}/g, '15,000');
+                previewBody = previewBody.replace(/\{\{6\}\}/g, '45,000');
+                previewBody = previewBody.replace(/\{\{7\}\}/g, '4.2');
+                previewBody = previewBody.replace(/\{\{8\}\}/g, '2.3');
+                preview += previewBody.replace(/\n/g, '<br>');
+            }
+
+            if (footer) {
+                preview += `<br><br><small>${footer}</small>`;
+            }
+
+            // Add button previews
+            for (let i = 1; i <= buttonCount; i++) {
+                const btnText = document.getElementById(`btnText${i}`).value;
+                if (btnText) {
+                    preview += `<br><br><button style="background:#25D366;color:white;border:none;padding:8px 16px;border-radius:4px;">${btnText}</button>`;
+                }
+            }
+
+            document.getElementById('preview').innerHTML = preview || 'No template data to preview';
+        }
+
+        // Update preview on input changes
+        document.querySelectorAll('input, textarea, select').forEach(element => {
+            element.addEventListener('input', updatePreview);
+            element.addEventListener('change', updatePreview);
+        });
+
+        // Form submission
+        document.getElementById('templateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                account: document.getElementById('account').value,
+                templateName: document.getElementById('templateName').value,
+                category: document.getElementById('category').value,
+                language: document.getElementById('language').value,
+                header: document.getElementById('header').value,
+                body: document.getElementById('body').value,
+                footer: document.getElementById('footer').value,
+                buttons: []
+            };
+
+            // Collect button data
+            for (let i = 1; i <= buttonCount; i++) {
+                const btnText = document.getElementById(`btnText${i}`).value;
+                const btnType = document.getElementById(`btnType${i}`).value;
+                const btnValue = document.getElementById(`btnValue${i}`).value;
+
+                if (btnText && btnType) {
+                    const button = { type: btnType, text: btnText };
+                    if (btnType !== 'QUICK_REPLY' && btnValue) {
+                        if (btnType === 'URL') {
+                            button.url = btnValue;
+                        } else if (btnType === 'PHONE_NUMBER') {
+                            button.phone_number = btnValue;
+                        }
+                    }
+                    formData.buttons.push(button);
+                }
+            }
+
+            // Display the data that should be copied to WhatsApp
+            const resultDiv = document.createElement('div');
+            resultDiv.style.cssText = 'margin-top:20px;padding:20px;background:#e8f5e8;border-radius:5px;border-left:4px solid #25D366;';
+            resultDiv.innerHTML = `
+                <h3>📋 Copy this data to Meta WhatsApp Template Form:</h3>
+                <pre style="background:white;padding:15px;border-radius:3px;overflow-x:auto;">${JSON.stringify(formData, null, 2)}</pre>
+                <button onclick="copyToClipboard('${JSON.stringify(formData, null, 2)}')" style="background:#25D366;color:white;border:none;padding:10px 20px;border-radius:3px;cursor:pointer;">📋 Copy to Clipboard</button>
+            `;
+
+            document.querySelector('.container').appendChild(resultDiv);
+        });
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+
+        // Load pre-built templates
+        function loadTemplate(templateType) {
+            const templates = {
+                welcome: {
+                    templateName: 'tanzania_service_welcome',
+                    category: 'UTILITY',
+                    language: 'en',
+                    header: '🇹🇿 Tanzania Service Finder',
+                    body: 'Habari {{1}}! 👋\n\nI\'m your AI assistant for finding services in Tanzania.\n\nI can help you find:\n🏪 Auto repair (karakana)\n🏥 Medical clinics (kliniki)\n✂️ Hair salons (kinyozi)\n🍽️ Restaurants (migahawa)\n\nSend your location or tell me what you need! 📍',
+                    footer: 'Powered by AI • Tanzania Services',
+                    buttons: [
+                        { type: 'QUICK_REPLY', text: '📍 Share Location' },
+                        { type: 'QUICK_REPLY', text: '🍽️ Find Restaurants' }
+                    ]
+                },
+                restaurants: {
+                    templateName: 'restaurant_finder',
+                    category: 'UTILITY',
+                    language: 'en',
+                    header: '🍽️ Restaurants in {{1}}',
+                    body: 'Hi {{2}}! Found {{3}} great restaurants near {{1}}:\n\n🏪 {{4}}\n   💰 TZS {{5}}-{{6}}\n   ⭐ {{7}}/5 stars\n   🍽️ {{8}}\n\n🏪 {{9}}\n   💰 TZS {{10}}-{{11}}\n   ⭐ {{12}}/5 stars\n   🍽️ {{13}}\n\n🏪 {{14}}\n   💰 TZS {{15}}-{{16}}\n   ⭐ {{17}}/5 stars\n   🍽️ {{18}}',
+                    footer: 'Prices in Tanzanian Shillings',
+                    buttons: [
+                        { type: 'QUICK_REPLY', text: '📍 Share My Location' },
+                        { type: 'QUICK_REPLY', text: '🔍 More Options' }
+                    ]
+                },
+                directions: {
+                    templateName: 'location_directions',
+                    category: 'UTILITY',
+                    language: 'en',
+                    header: '🗺️ Directions to {{1}}',
+                    body: 'Hi {{2}}! Here\'s how to get to {{1}}:\n\n📍 Address: {{3}}\n📏 Distance: {{4}} km from your location\n🚶 Travel time: ~{{5}} minutes\n\n🚗 Driving: {{6}}\n🚇 Public transport: {{7}}\n🚶 Walking: {{8}}\n\n🗺️ Google Maps: {{9}}',
+                    footer: 'Safe travels in Tanzania! 🇹🇿',
+                    buttons: [
+                        { type: 'URL', text: '🗺️ Open in Google Maps', url: '{{10}}' },
+                        { type: 'QUICK_REPLY', text: '📞 Call Business' }
+                    ]
+                },
+                medical: {
+                    templateName: 'medical_services',
+                    category: 'UTILITY',
+                    language: 'en',
+                    header: '🏥 Medical Services in {{1}}',
+                    body: 'Hi {{2}}! Healthcare facilities near {{1}}:\n\n🏥 {{3}}\n   📞 {{4}}\n   🏷️ {{5}}\n   ⭐ {{6}}/5\n   📏 {{7}} km\n\n🏥 {{8}}\n   📞 {{9}}\n   🏷️ {{10}}\n   ⭐ {{11}}/5\n   📏 {{12}} km\n\n🏥 {{13}}\n   📞 {{14}}\n   🏷️ {{15}}\n   ⭐ {{16}}/5\n   📏 {{17}} km',
+                    footer: 'Emergency: Call 112 or 999',
+                    buttons: [
+                        { type: 'PHONE_NUMBER', text: '🚨 Call Emergency', phone_number: '+255112' },
+                        { type: 'QUICK_REPLY', text: '📍 Get Directions' }
+                    ]
+                },
+                feedback: {
+                    templateName: 'feedback_request',
+                    category: 'UTILITY',
+                    language: 'en',
+                    header: '⭐ Rate Your Experience',
+                    body: 'Hi {{1}}! How was your experience with {{2}}?\n\n⭐⭐⭐⭐⭐ Excellent\n⭐⭐⭐⭐ Good\n⭐⭐⭐ Okay\n⭐⭐ Poor\n⭐ Very Poor\n\nYour feedback helps improve our service! 🙏',
+                    footer: 'Thank you for using Tanzania Services',
+                    buttons: [
+                        { type: 'QUICK_REPLY', text: '⭐⭐⭐⭐⭐ Excellent' },
+                        { type: 'QUICK_REPLY', text: '⭐⭐⭐⭐ Good' },
+                        { type: 'QUICK_REPLY', text: '⭐⭐⭐ Okay' }
+                    ]
+                }
+            };
+
+            const template = templates[templateType];
+            if (!template) return;
+
+            // Load template data into form
+            document.getElementById('templateName').value = template.templateName;
+            document.getElementById('category').value = template.category;
+            document.getElementById('language').value = template.language;
+            document.getElementById('header').value = template.header;
+            document.getElementById('body').value = template.body;
+            document.getElementById('footer').value = template.footer;
+
+            // Clear existing buttons
+            document.getElementById('buttonsContainer').innerHTML = '';
+            buttonCount = 0;
+
+            // Add template buttons
+            template.buttons.forEach(btn => {
+                addButton();
+                const btnIndex = buttonCount;
+                document.getElementById(`btnType${btnIndex}`).value = btn.type;
+                document.getElementById(`btnText${btnIndex}`).value = btn.text;
+
+                if (btn.type !== 'QUICK_REPLY') {
+                    updateButtonFields(btnIndex);
+                    if (btn.type === 'URL') {
+                        document.getElementById(`btnValue${btnIndex}`).value = btn.url;
+                    } else if (btn.type === 'PHONE_NUMBER') {
+                        document.getElementById(`btnValue${btnIndex}`).value = btn.phone_number;
+                    }
+                }
+            });
+
+            updatePreview();
+        }
+
+        // Initialize character counts
+        updateCharCount('header', 60);
+        updateCharCount('body', 1024);
+        updateCharCount('footer', 60);
+    </script>
+</body>
+</html>
