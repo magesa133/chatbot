@@ -5,7 +5,7 @@
       "category": "UTILITY",
       "language": "en",
       "header": "🏪 Service Recommendations",
-      "body": "Dear {{1}}, we found excellent services near {{2}}:\n\n{{3}}\n\n💰 Cost: TZS {{4}}\n📍 {{5}} km away\n\nReply below for details.",
+      "body": "Dear {{1}}, we found excellent services near {{2}}:\n\n{{3}}\n\n💰 Cost: TZS {{4}}\n📍 {{5}} km away\n\n🌐 Directions: {{6}}\n\nReply below for details.",
       "footer": "Tanzania Services Assistant",
       "buttons": [
         {
@@ -15,6 +15,50 @@
         {
           "type": "QUICK_REPLY",
           "text": "📞 Contact Service"
+        },
+        {
+          "type": "QUICK_REPLY",
+          "text": "⭐ More Options"
+        }
+      ]
+    },
+    {
+      "template_name": "location_received",
+      "category": "UTILITY",
+      "language": "en",
+      "header": "📍 Location Received!",
+      "body": "Thanks for sharing your location! We found {{1}} services within 5km:\n\n🍽️ Restaurants: {{2}}\n🏥 Medical: {{3}}\n✂️ Beauty: {{4}}\n\nShare your location to get personalized recommendations!",
+      "footer": "Tanzania Services Assistant",
+      "buttons": [
+        {
+          "type": "QUICK_REPLY",
+          "text": "🍽️ Show Restaurants"
+        },
+        {
+          "type": "QUICK_REPLY",
+          "text": "🏥 Show Medical"
+        },
+        {
+          "type": "QUICK_REPLY",
+          "text": "✂️ Show Beauty"
+        }
+      ]
+    },
+    {
+      "template_name": "emergency_services",
+      "category": "UTILITY",
+      "language": "en",
+      "header": "🚨 Emergency Services",
+      "body": "For medical emergencies in Tanzania:\n\n🚑 Call 112 (Emergency)\n🏥 Visit nearest hospital\n\nNearest emergency facility:\n{{1}}\n📍 {{2}}\n☎️ {{3}}",
+      "footer": "Stay safe - Tanzania Services",
+      "buttons": [
+        {
+          "type": "QUICK_REPLY",
+          "text": "📍 Get Directions"
+        },
+        {
+          "type": "QUICK_REPLY",
+          "text": "📞 Call Emergency"
         }
       ]
     }

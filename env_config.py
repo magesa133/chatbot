@@ -7,6 +7,14 @@ Configure your Ghala WhatsApp credentials here
 import os
 from typing import Optional, Dict, Any
 
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # python-dotenv not installed, continue with system environment variables
+    pass
+
 class Config:
     """Configuration class for environment variables"""
 
